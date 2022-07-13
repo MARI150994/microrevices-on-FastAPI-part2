@@ -1,3 +1,5 @@
+import logging
+
 from pydantic import BaseSettings
 
 
@@ -8,6 +10,5 @@ class Settings(BaseSettings):
     SQLALCHEMY_PG_CONN_URI: str = 'postgresql+asyncpg://user:password@localhost:5431/stock'
     CACHE_HOST: str = 'redis://localhost:6379'
     LOGIN_APP_URL: str = 'http://0.0.0.0:8000/login/perm'
-
 
 settings = Settings()

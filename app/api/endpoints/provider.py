@@ -32,13 +32,13 @@ async def create_provider(
         user_has_perm: bool = Depends(user_allow_crud)
 ):
     if user_has_perm:
-        provider = await crud.get_providerby_name(db, provider_in.name)
+        provider = await crud.get_provider_by_name(db, provider_in.name)
         if provider:
             raise HTTPException(
                 status_code=400,
                 detail='Product with this name already exist'
             )
-        provider = await crud.create_provider(db, provider_in)
+        provider = await crud.create_providers(db, provider_in)
         return provider
     raise HTTPException(status_code=403, detail='Not enough rights')
 

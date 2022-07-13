@@ -17,7 +17,7 @@ async def startup():
     await database.connect()
     logging.info('db connect finish')
     logging.info('redis connect start')
-    r.ping()
+    await r.ping()
     logging.info('redis connect finish')
 
 

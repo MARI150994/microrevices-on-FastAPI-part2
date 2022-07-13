@@ -21,7 +21,7 @@ async def get_db() -> AsyncSession:
 
 async def user_allow_crud(access_token: str = Header()):
     # check cache wih access token, if in cache and return True then allow
-    user_is_admin = r.get(access_token)
+    user_is_admin = await r.get(access_token)
 
     if user_is_admin is None:
         headers = {'accept': 'application/json',
@@ -31,12 +31,11 @@ async def user_allow_crud(access_token: str = Header()):
         async def check_perm():
             async with aiohttp.ClientSession() as session:
                 async with session.post(url=settings.LOGIN_APP_URL,
-                                        headers=headers) as r:
-                    if r.status == 403:
+                                        headers=headers) as req:
+                    if req.status == 403:
                         raise HTTPException(status_code=403,
                                             detail='Invalid token')
-                    print('RESULT FROM check_perm', r)
-                    return await r.json()
+                    return await req.json()
 
         user_is_admin = await check_perm()
 
